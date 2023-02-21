@@ -3,9 +3,34 @@ import zipfile
 from pytz import timezone
 
 from pandas import read_csv, concat, to_datetime
+from bg_analysis import background_analysis
 
 # download from https://www.kaggle.com/datasets/ayhmrba/elon-musk-tweets-2010-2021
 DATASET_NAME = 'archive.zip'
+
+
+def wash(tweets_df):
+    '''
+    Essential data wash
+    '''
+
+    # drop columns where all values are NaN
+    tweets_df.dropna(axis=1, how='all', inplace=True)
+    # drop duplicate tweets
+    tweets_df.drop_duplicates(subset=['id'], inplace=True)
+
+    # merge nlikes, nreplies, nretweets and likes_count, replies_count, retweets_count
+    tweets_df.loc[:, ['nlikes', 'nreplies', 'nretweets']] = tweets_df.loc[:, [
+        'nlikes', 'nreplies', 'nretweets']].fillna(0)
+    tweets_df.loc[:, ['likes_count', 'replies_count', 'retweets_count']] = tweets_df.loc[:, [
+        'likes_count', 'replies_count', 'retweets_count']].fillna(0)
+    tweets_df['likes_count'] += tweets_df['nlikes']
+    tweets_df['replies_count'] += tweets_df['nreplies']
+    tweets_df['retweets_count'] += tweets_df['nretweets']
+
+    tweets_df = tweets_df.drop(['nlikes', 'nreplies', 'nretweets'], axis=1)
+
+    return tweets_df
 
 
 def read_tweets():
@@ -37,10 +62,7 @@ def read_tweets():
     tweets_df = concat(tweets_list, axis=0, ignore_index=True)
     tweets_df['date'] = to_datetime(tweets_df['date'], utc=True)
 
-    # drop columns where all values are NaN
-    tweets_df.dropna(axis=1, how='all', inplace=True)
-    # drop duplicate tweets
-    tweets_df.drop_duplicates(subset=['id'], inplace=True)
+    tweets_df = wash(tweets_df)
 
     return tweets_df
 
@@ -49,6 +71,7 @@ def unzip_dataset():
     '''
     unzip dataset when necessary
     '''
+
     if not os.path.exists(r'./tweets/2010.csv'):
         with zipfile.ZipFile(DATASET_NAME, 'r') as zip_ref:
             zip_ref.extractall('./tweets/')
@@ -59,6 +82,9 @@ def __main__():
     unzip_dataset()
 
     tweets_df = read_tweets()
+
+    os.makedirs(os.path.dirname('./fig/'), exist_ok=True)
+    background_analysis(tweets_df)
 
 
 __main__()
