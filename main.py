@@ -7,7 +7,7 @@ from bg_analysis import background_analysis
 
 # download from https://www.kaggle.com/datasets/ayhmrba/elon-musk-tweets-2010-2021
 DATASET_NAME = 'archive.zip'
-
+TWEETS_FOLDER = './archive/'
 
 def wash(tweets_df):
     '''
@@ -39,7 +39,7 @@ def read_tweets():
     '''
 
     tweets_list = []
-    for root, _, file_list in os.walk('tweets'):
+    for root, _, file_list in os.walk(TWEETS_FOLDER):
         for file in file_list:
             # these two file is different from others
             if file not in ['2021.csv', '2022.csv']:
@@ -72,9 +72,9 @@ def unzip_dataset():
     unzip dataset when necessary
     '''
 
-    if not os.path.exists(r'./tweets/2010.csv'):
+    if not os.path.exists(os.path.join(TWEETS_FOLDER, '2010.csv')):
         with zipfile.ZipFile(DATASET_NAME, 'r') as zip_ref:
-            zip_ref.extractall('./tweets/')
+            zip_ref.extractall(TWEETS_FOLDER)
             print("Dataset upzipped")
 
 
