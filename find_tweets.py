@@ -8,8 +8,16 @@ from collections import defaultdict
 
 # extract an year and set the lookup dataset path
 def extract_tweets(timestamp,df):
-    # year = timestamp.split('-')[0]
-    # df = pd.read_csv('./tweets/'+year+'.csv')
+    '''
+    This function returns the tweets for a given yyyy-mm-dd
+    
+    args:
+    timestamp: a string of format 'yyyy-mm-dd'
+    df: the dataframe of the entire cleaned data
+    
+    returns:
+    A list of tweets if there are any tweets in the dataset on the given day
+    '''
 
     dates = np.array(df['date'])
     tweets = np.array(df['tweet'])
