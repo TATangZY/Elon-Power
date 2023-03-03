@@ -5,6 +5,7 @@ from pytz import timezone
 from pandas import read_csv, concat, to_datetime
 from bg_analysis import background_analysis
 from sentiment import sentimentAnalysis
+from find_tweets import extract_tweets
 
 # download from https://www.kaggle.com/datasets/ayhmrba/elon-musk-tweets-2010-2021
 DATASET_NAME = 'archive.zip'
@@ -87,5 +88,7 @@ def __main__():
     os.makedirs(os.path.dirname('./fig/'), exist_ok=True)
     background_analysis(tweets_df)
     tweets_df = sentimentAnalysis(tweets_df)
+
+    print(extract_tweets('2013-12-26', tweets_df))
 
 __main__()
