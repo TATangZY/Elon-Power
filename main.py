@@ -6,10 +6,12 @@ from pandas import read_csv, concat, to_datetime
 from bg_analysis import background_analysis
 from sentiment import sentimentAnalysis
 from find_tweets import extract_tweets
+from topics import get_tweets_with_topic
 
 # download from https://www.kaggle.com/datasets/ayhmrba/elon-musk-tweets-2010-2021
 DATASET_NAME = 'archive.zip'
 TWEETS_FOLDER = './archive/'
+
 
 def wash(tweets_df):
     '''
@@ -90,5 +92,10 @@ def __main__():
     tweets_df = sentimentAnalysis(tweets_df)
 
     print(extract_tweets('2013-12-26', tweets_df))
+
+    for k, v in get_tweets_with_topic(tweets_df).items():
+        print(k)
+        print(len(v))
+
 
 __main__()
