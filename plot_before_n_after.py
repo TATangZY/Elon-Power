@@ -20,16 +20,17 @@ def plot_before_n_after(company_name, tweet_date, avg=10, scope=50):
     assert isinstance(tweet_date, str)
 
     fname = ""
+    folder_name = './tweets/'
     if (company_name == 'tesla'):
-        fname = 'TSLA.csv'
+        fname = folder_name + 'TSLA.csv'
     elif (company_name == 'tweeter'):
-        fname = 'TWTR.csv'
+        fname = folder_name + 'TWTR.csv'
     elif (company_name == 'bitcoin'):
-        fname = 'BTC-USD.csv'
+        fname = folder_name + 'BTC-USD.csv'
     elif (company_name == 'dogecoin'):
-        fname = 'DOGE-USD.csv'
+        fname = folder_name + 'DOGE-USD.csv'
     elif (company_name == 'gamestop'):
-        fname = 'GME.csv'
+        fname = folder_name + 'GME.csv'
     
     if not pathlib.Path(fname).is_file():
 
