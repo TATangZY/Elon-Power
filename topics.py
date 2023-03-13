@@ -3,6 +3,17 @@ from collections import defaultdict
 
 from pandas import DataFrame
 
+KW_DICT = {}
+tesla_kws = ['tesla', 'model s', 'model 3', 'model x', 'model y',]
+bit_kws = ['bitcoin',]
+doge_kws = ['dogecoin',]
+tw_kws = ['twitter',]
+ford_kws = ['ford', 'mustang', 'mach-e', 'F-150']
+KW_DICT['tesla'] = tesla_kws
+KW_DICT['bitcoin'] = bit_kws
+KW_DICT['dogecoin'] = doge_kws
+KW_DICT['twitter'] = tw_kws
+KW_DICT['ford'] = ford_kws
 
 def tweets_filter(tweets, kws):
     '''
@@ -25,19 +36,17 @@ def get_tweets_with_topic(tweets_df):
     # Add topic and its keywords (ignore case) here
 
     # Tesla
-    tesla_kws = ['tesla', 'model s', 'model 3', 'model x', 'model y',]
     topic_dict['tesla'] = tweets_filter(tweets_df, tesla_kws)
 
     # Bitcoin
-    bit_kws = ['bitcoin',]
     topic_dict['bitcoin'] = tweets_filter(tweets_df, bit_kws)
 
     # Dogecoin
-    doge_kws = ['dogecoin',]
     topic_dict['dogecoin'] = tweets_filter(tweets_df, doge_kws)
 
     # Twitter
-    tw_kws = ['twitter',]
     topic_dict['twitter'] = tweets_filter(tweets_df, tw_kws)
+
+    topic_dict['ford'] = tweets_filter(tweets_df, ford_kws)
 
     return topic_dict

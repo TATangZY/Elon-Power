@@ -98,4 +98,5 @@ def __main__():
         print(len(v))
 
 
-__main__()
+if __name__ == "__main__":
+    __main__()
