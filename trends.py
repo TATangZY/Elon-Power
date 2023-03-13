@@ -42,7 +42,9 @@ def plot_trends(keywords, keydates= [], tf = 'today 3-m'):
     axv = df.plot.line()
     for keydate in keydates:
         axv.axvline(keydate, color="black", linestyle="dashed")
-        
+
+    axv.set_xlabel('date')
+    axv.set_ylabel('Interest over time')
     return df
 
 def search_change(keywords, keydate, dayframe, tf = 'today 3-m'):
