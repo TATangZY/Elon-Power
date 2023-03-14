@@ -153,8 +153,3 @@ def find_key_dates(keywords, cookie, threshlow = 0, threshhigh = 100, tf = 'toda
     kdates = pd.DataFrame(dates, keywords)
     
     return kdates
-
-kw = ["dogecoin"]
-kd = find_key_dates(kw, cook)
-keyd = ['2021-04-01', '2022-06-18']
-plot_trends(kw, cook, keydates = keyd, tf = '2020-09-01 2022-10-01')
