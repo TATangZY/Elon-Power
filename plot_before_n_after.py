@@ -4,6 +4,12 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pathlib
 
+import pandas as pd
+import datetime
+import matplotlib
+import matplotlib.pyplot as plt
+import pathlib
+
 def plot_before_n_after(company_name, tweet_date, avg=10, scope=50):
 
     '''
@@ -19,18 +25,23 @@ def plot_before_n_after(company_name, tweet_date, avg=10, scope=50):
     assert isinstance(company_name, str)
     assert isinstance(tweet_date, str)
 
-    fname = ""
-    folder_name = './tweets/'
+    fname = "./stocks/"
     if (company_name == 'tesla'):
-        fname = folder_name + 'TSLA.csv'
-    elif (company_name == 'tweeter'):
-        fname = folder_name + 'TWTR.csv'
+        fname += 'TSLA.csv'
+    elif (company_name == 'twitter'):
+        fname += 'TWTR.csv'
     elif (company_name == 'bitcoin'):
-        fname = folder_name + 'BTC-USD.csv'
+        fname += 'BTC-USD.csv'
     elif (company_name == 'dogecoin'):
-        fname = folder_name + 'DOGE-USD.csv'
+        fname += 'DOGE-USD.csv'
     elif (company_name == 'gamestop'):
-        fname = folder_name + 'GME.csv'
+        fname += 'GME.csv'
+    elif (company_name == 'amazon'):
+        fname += 'AMZN.csv'
+    elif (company_name == 'ford'):
+        fname += 'F.csv'
+    elif (company_name == 'apple'):
+        fname += 'AAPL.csv'
     
     if not pathlib.Path(fname).is_file():
 
@@ -61,9 +72,21 @@ def plot_before_n_after(company_name, tweet_date, avg=10, scope=50):
 
     # the main plot
     fig, axs = plt.subplots(2, figsize=(16,9))
-    fig.suptitle('Before Musk\'s Tweet and After')
+    fig.suptitle('Impact on {} Before Musk\'s Tweet and After'.format(company_name.capitalize()))
+    
+    
+    
+    # these are matplotlib.patch.Patch properties
+    props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+    
+    
 
     # axis 0
+    textstr = '\n'.join((
+    r'$\delta_{one} = %.2f$' % ((df_avg['Volume'][query] - df_avg['Volume'][query-1])/df_avg['Volume'][query], ),
+    r'$\delta_{three} = %.2f$' % ((df_avg['Volume'][query+3] - df_avg['Volume'][query])/df_avg['Volume'][query], )))
+    axs[0].text(0.15, 0.95, textstr, transform=axs[0].transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
     axs[0].plot(volumes.index, volumes.values, label='Volume')
     axs[0].vlines(x = df_avg.index[query], ymin = min(volumes), ymax = max(volumes.values),
             colors = 'purple',
@@ -74,6 +97,11 @@ def plot_before_n_after(company_name, tweet_date, avg=10, scope=50):
     axs[0].set_ylabel('Volume')
 
     # axis 1
+    textstr = '\n'.join((
+    r'$\delta_{one} = %.2f$' % ((df_avg['Adj Close'][query] - df_avg['Adj Close'][query-1])/df_avg['Adj Close'][query], ),
+    r'$\delta_{three} = %.2f$' % ((df_avg['Adj Close'][query+3] - df_avg['Adj Close'][query])/df_avg['Adj Close'][query], )))
+    axs[1].text(0.15, 0.95, textstr, transform=axs[1].transAxes, fontsize=14,
+        verticalalignment='top', bbox=props)
     axs[1].plot(closing_prices.index, closing_prices.values, label='Closing Price', c='g')
     axs[1].vlines(x = df_avg.index[query], ymin = min(closing_prices.values), ymax = max(closing_prices.values),
             colors = 'purple',
