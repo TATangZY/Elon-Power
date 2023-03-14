@@ -44,6 +44,9 @@ def plot_trends(keywords, cookie, keydates= [], tf = 'today 3-m'):
     axv = df.plot.line()
     for keydate in keydates:
         axv.axvline(keydate, color="r", linewidth=0.5)
+
+    axv.set_xlabel('date')
+    axv.set_ylabel('Interest over time')
         
     return df
 
