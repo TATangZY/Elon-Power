@@ -1,6 +1,24 @@
 # Elon-Power
 The Power of Elon Mask -- an ECE 143 Project
 
+## Usage
+
+1. Visit Google Trends and get your cookie
+2. Open visual.ipynb
+3. Paste your cookie in the second python cell
+4. Run visual.ipynb
+
+## Thrid Party Modules
+
+1. matplotlib==3.7.0
+2. numpy==1.24.2
+3. pandas==1.5.3
+4. pytrends==4.9.0
+5. pytz==2022.7.1
+6. requests==2.28.2
+7. scipy==1.10.1
+8. vaderSentiment==3.3.2
+
 ## Dataset(s)
 
 [Elon Musk Tweets (2010 - 2022) | Kaggle](https://www.kaggle.com/datasets/ayhmrba/elon-musk-tweets-2010-2021?select=2016.csv)
