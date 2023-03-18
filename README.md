@@ -22,13 +22,28 @@ The Power of Elon Mask -- an ECE 143 Project
 ## File Structure
 
 Elon-Power:
+
+
 ├───archive: 
+
+
 ├───sentiment code: contains all of the .py files related to sentiment analysis
+
+
 ├───stocks: contains all of the numerical data on stocks we used
+
+
 ├───stocks code: contains all of the .py files related to stocks analysis
+
+
 ├───trends code: contains all of the .py files related to google trends analysis
+
+
 ├───tweets: contains all of the tweet data we used
+
+
 └───tweets code: contains all of the .py files related to basic tweet gathering, filtering, and sorting
+
 
 ## Dataset(s)
 
