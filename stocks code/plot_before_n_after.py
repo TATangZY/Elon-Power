@@ -72,18 +72,7 @@ def plot_before_n_after(company_name, tweet_dates, avg=10, scope=50):
     fig, axs = plt.subplots(2, figsize=(16,9))
     fig.suptitle('Impact on {} Before Musk\'s Tweet and After'.format(company_name.capitalize()))
     
-    
-    
-    # these are matplotlib.patch.Patch properties
-    # props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-    
     # axis 0
-    # textstr = '\n'.join((
-    # r'$\delta_{one} = %.2f$' % ((df_avg['Volume'][query] - df_avg['Volume'][query-1])/df_avg['Volume'][query], ),
-    # r'$\delta_{three} = %.2f$' % ((df_avg['Volume'][query+3] - df_avg['Volume'][query])/df_avg['Volume'][query], )))
-    # axs[0].text(0.15, 0.95, textstr, transform=axs[0].transAxes, fontsize=14,
-    #     verticalalignment='top', bbox=props)
-    
     axs[0].plot(volumes.index, volumes.values, label='Volume')
     
     for itr, query in enumerate(queries):
@@ -91,17 +80,8 @@ def plot_before_n_after(company_name, tweet_dates, avg=10, scope=50):
             colors = colors[itr],
             label = 'Musk\'s Tweet {}'.format(itr))
     axs[0].legend()
-    axs[0].get_yaxis().set_major_formatter(
-        matplotlib.ticker.FuncFormatter(lambda x, _: format(int(x), ',')))
     axs[0].set_ylabel('Volume')
 
-    # axis 1
-    # textstr = '\n'.join((
-    # r'$\delta_{one} = %.2f$' % ((df_avg['Adj Close'][query] - df_avg['Adj Close'][query-1])/df_avg['Adj Close'][query], ),
-    # r'$\delta_{three} = %.2f$' % ((df_avg['Adj Close'][query+3] - df_avg['Adj Close'][query])/df_avg['Adj Close'][query], )))
-    # axs[1].text(0.15, 0.95, textstr, transform=axs[1].transAxes, fontsize=14,
-    #     verticalalignment='top', bbox=props)
-    
     axs[1].plot(closing_prices.index, closing_prices.values, label='Closing Price', c='g')
     for itr, query in enumerate(queries):
         axs[1].vlines(x = df_avg.index[query], ymin = min(closing_prices), ymax = max(closing_prices.values),
